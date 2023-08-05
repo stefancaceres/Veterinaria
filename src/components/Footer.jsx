@@ -2,7 +2,7 @@
 
 function Footer() {
   return (
-    <div>
+    <div className=" bottom-full flex">
         Footer
     </div>
   )
