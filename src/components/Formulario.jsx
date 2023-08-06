@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 // eslint-disable-next-line no-unused-vars
 import {useState, useEffect} from "react"
 import Error from './Error'
 // import Correcto from './Correcto'
 
-// eslint-disable-next-line react/prop-types
-function Formulario({pacientes, setPacientes, paciente}) {
+
+function Formulario({pacientes, setPacientes, paciente, setPaciente}) {
   // state 1
   const [nombreM, setNombreM] = useState('') ;
   // state 2
@@ -34,9 +35,7 @@ function Formulario({pacientes, setPacientes, paciente}) {
 
 
   const generarId = () =>{
-    // eslint-disable-next-line no-undef
     const random= Math.random().toString(36).substr(2)
-    // eslint-disable-next-line no-undef
     const fecha = Date.now().toString(36)
     return random + fecha
   }
@@ -57,11 +56,22 @@ function Formulario({pacientes, setPacientes, paciente}) {
       email,
       numero,
       fechaIn,
-      sintomas,
-      id: generarId()
+      sintomas      
+    }
+
+    if(paciente.id ){
+      // editando registro
+      objPaciente.id = paciente.id 
+      const pacientesActualizados = pacientes.map(pacienteState => pacienteState.id === paciente.id ? objPaciente : pacienteState)
+      setPacientes(pacientesActualizados)
+      setPaciente({})
+    } else {
+      // Nuevo registro
+      objPaciente.id = generarId();
+      setPacientes([...pacientes, objPaciente])
     }
     
-    setPacientes([...pacientes, objPaciente])
+    // reiniciar el formulario
     setNombreM("")
     setNombreP("")
     setEmail("")
@@ -168,7 +178,7 @@ function Formulario({pacientes, setPacientes, paciente}) {
           }      */}
           <input type="submit"
             className=" bg-indigo-600 p-3 w-full text-white font-bold uppercase hover:bg-indigo-800 cursor-pointer transition-all rounded-lg mb-2"
-            value="Agregar Paciente" />     
+            value={paciente.id ? "Editar paciente" : "Agregar paciente" } />     
         </form>
     </div>
   )

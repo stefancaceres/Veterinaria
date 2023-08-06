@@ -1,7 +1,16 @@
 // eslint-disable-next-line react/prop-types, no-unused-vars
-function Pacientes({paciente, setPaciente}) {
+function Pacientes({paciente, setPaciente, eliminarPaciente}) {
     // eslint-disable-next-line react/prop-types
-    const{nombreM, nombreP, email, numero, fechaIn, sintomas}=paciente
+    const{nombreM, nombreP, email, numero, fechaIn, sintomas, id}=paciente
+
+    const handleEliminar=() => {
+      const respuesta = confirm("Deseas eliminar el paciente?");
+
+      if(respuesta){
+        eliminarPaciente(id)
+      }
+    
+    }
 
   return (
     <div className="m-3 bg-white shadow-md px-5 py-5 rounded-xl ">
@@ -41,6 +50,7 @@ function Pacientes({paciente, setPaciente}) {
             <button 
             type="button"
             className=" py-2 px-5  bg-red-500 hover:bg-red-800 rounded-lg text-white font-bold"
+            onClick={handleEliminar}
             >
                 Eliminar
             </button>

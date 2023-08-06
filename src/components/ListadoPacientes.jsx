@@ -1,7 +1,7 @@
 import Pacientes from './Pacientes'
 
 // eslint-disable-next-line react/prop-types, no-unused-vars
-function ListadoPacientes({pacientes, setPaciente}) {
+function ListadoPacientes({pacientes, setPaciente, eliminarPaciente}) {
 
   
 
@@ -25,6 +25,7 @@ function ListadoPacientes({pacientes, setPaciente}) {
               key={paciente.id}
               paciente={paciente}
               setPaciente={setPaciente}
+              eliminarPaciente={eliminarPaciente}
               />          
               ))}    
           </div>
