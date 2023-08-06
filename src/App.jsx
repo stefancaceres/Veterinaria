@@ -7,6 +7,9 @@ import {useState} from 'react'
 function App() {
   // state 1
   const[pacientes, setPacientes] = useState([])
+  // state 2
+  // eslint-disable-next-line no-unused-vars
+  const[paciente, setPaciente] = useState({})
 
 
 
@@ -19,8 +22,12 @@ function App() {
         <Formulario
           pacientes={pacientes}
           setPacientes={setPacientes}
+          paciente={paciente}
         />
-        <ListadoPacientes/>
+        <ListadoPacientes
+          pacientes={pacientes}
+          setPaciente={setPaciente}
+        />
       </div>
       <Footer/>
     </div>

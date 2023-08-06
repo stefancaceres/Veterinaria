@@ -1,6 +1,10 @@
-import {useState,} from "react"
+// eslint-disable-next-line no-unused-vars
+import {useState, useEffect} from "react"
+import Error from './Error'
+// import Correcto from './Correcto'
 
-function Formulario({pacientes, setPacientes}) {
+// eslint-disable-next-line react/prop-types
+function Formulario({pacientes, setPacientes, paciente}) {
   // state 1
   const [nombreM, setNombreM] = useState('') ;
   // state 2
@@ -16,6 +20,27 @@ function Formulario({pacientes, setPacientes}) {
   // state 7
   const [error, setError] = useState(false);
   
+
+  useEffect(()=>{
+    if( Object.keys(paciente).length > 0){
+      setNombreM(paciente.nombreM)
+      setNombreP(paciente.nombreP)
+      setEmail(paciente.email)
+      setNumero(paciente.numero)
+      setFechaIn(paciente.fechaIn)
+      setSintomas(paciente.sintomas)
+    } 
+  },[paciente])
+
+
+  const generarId = () =>{
+    // eslint-disable-next-line no-undef
+    const random= Math.random().toString(36).substr(2)
+    // eslint-disable-next-line no-undef
+    const fecha = Date.now().toString(36)
+    return random + fecha
+  }
+  
   const handleSubmit=(e)=>{
     e.preventDefault();
     // validacion del formulario
@@ -30,8 +55,10 @@ function Formulario({pacientes, setPacientes}) {
       nombreM,
       nombreP,
       email,
+      numero,
       fechaIn,
-      sintomas
+      sintomas,
+      id: generarId()
     }
     
     setPacientes([...pacientes, objPaciente])
@@ -126,12 +153,19 @@ function Formulario({pacientes, setPacientes}) {
               onChange={(e)=> setSintomas(e.target.value)}/>
           </div> 
           {error && 
-            <div className=" bg-red-500 text-center p-3 font-bold rounded-md mb-3 text-white">
-              <p>
-                Todos los campos son obligatorios.
-              </p>
-            </div>
+            <Error
+              mensaje="Todos los campos son obligatorios."
+            />
           }     
+          {/* {error ? 
+            <Error
+              mensaje="Todos los campos son obligatorios."
+            />
+            :
+            <Correcto
+              mensaje="Nuevo paciente añadido correctamente."
+            />
+          }      */}
           <input type="submit"
             className=" bg-indigo-600 p-3 w-full text-white font-bold uppercase hover:bg-indigo-800 cursor-pointer transition-all rounded-lg mb-2"
             value="Agregar Paciente" />     
